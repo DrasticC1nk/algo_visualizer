@@ -142,23 +142,67 @@ static const Vtx QUAD[6] =
 };
 
 static const char* VS_SRC = R"(
-struct VSIn { float3 pos : POSITION; float2 uv : TEXCOORD0; };
-struct VSOut { float4 pos : SV_Position; float2 uv : TEXCOORD0; };
-VSOut main(VSIn vin){ VSOut o; o.pos=float4(vin.pos,1); o.uv=vin.uv; return o;}
+    struct VSIn 
+    { 
+        float3 pos : POSITION; 
+        float2 uv : TEXCOORD0; 
+    };
+
+    struct VSOut 
+    { 
+        float4 pos : SV_Position; 
+        float2 uv : TEXCOORD0; 
+    };
+
+    VSOut main(VSIn vin)
+    { 
+        VSOut o; 
+        o.pos=float4(vin.pos,1); 
+        o.uv=vin.uv; return o;
+    }
 )";
+
 static const char* PS_SRC = R"(
-Texture2D gridTex : register(t0);
-SamplerState samp0 : register(s0);
-struct PSIn { float4 pos:SV_Position; float2 uv:TEXCOORD0; };
-float4 main(PSIn pin) : SV_Target { return gridTex.Sample(samp0, pin.uv); }
+    Texture2D gridTex : register(t0);
+
+    SamplerState samp0 : register(s0);
+
+    struct PSIn 
+    { 
+        float4 pos:SV_Position; 
+        float2 uv:TEXCOORD0; 
+    };
+
+    float4 main(PSIn pin) : SV_Target 
+    {
+        return gridTex.Sample(samp0, pin.uv); 
+    }
 )";
+
 static const char* VS_LINES = R"(
-struct VSIn { float2 pos : POSITION; };
-struct VSOut { float4 pos : SV_Position; };
-VSOut main(VSIn i){ VSOut o; o.pos = float4(i.pos, 0.0, 1.0); return o;}
+    struct VSIn 
+    { 
+        float2 pos : POSITION; 
+    };
+
+    struct VSOut 
+    { 
+        float4 pos : SV_Position; 
+    };
+
+    VSOut main(VSIn i)
+    { 
+        VSOut o; 
+        o.pos = float4(i.pos, 0.0, 1.0); 
+        return o;
+    }
 )";
+
 static const char* PS_LINES = R"(
-float4 main() : SV_Target { return float4(0.75,0.75,0.75,1.0); }
+    float4 main() : SV_Target 
+    { 
+        return float4(0.75,0.75,0.75,1.0); 
+    }
 )";
 
 void UpdateWindowTitle();
